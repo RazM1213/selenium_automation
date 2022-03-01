@@ -43,6 +43,25 @@ class HeaderPage:
         self.wait.until(EC.visibility_of(self.driver.find_element(By.CSS_SELECTOR, "#menuUserLink>.hi-user")))
         return self.driver.find_element(By.CSS_SELECTOR, "#menuUserLink>.hi-user").text
 
+    def cart_hover_table(self):
+        return self.driver.find_elements(By.TAG_NAME, "table")[0]
+
+    def cart_hover_table_first_product(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "table>tbody>tr")[0]
+
+    def cart_hover_table_second_product(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "table>tbody>tr")[1]
+
+    def cart_hover_table_third_product(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "table>tbody>tr")[2]
+
+    def cart_hover_table_product_details(self, product_elem):
+        name = product_elem.find_elements(By.CSS_SELECTOR, "td>a>h3")[0].text
+        qty = product_elem.find_elements(By.CSS_SELECTOR, "td>a>label")[0].text[5:]
+        color = product_elem.find_elements(By.CSS_SELECTOR, "td>a>label")[1].text[7:]
+
+        return {"name": name, "qty": qty, "color": color}
+
     def logo_click(self):
         self.logo().click()
 

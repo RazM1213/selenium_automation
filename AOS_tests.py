@@ -2,6 +2,7 @@ from unittest import TestCase
 from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
 from time import sleep
+from selenium.webdriver.common.by import By
 from MainPage import MainPage
 from HeaderPage import HeaderPage
 from LoginPopUpPage import LoginPopUpPage
@@ -49,7 +50,40 @@ class test_AOS(TestCase):
         self.assertEqual(self.header_page.shopping_cart_number(), "5")
 
     def test_2(self):
-        pass
+        self.main_page.click_category("laptopsImg")
+        self.category_page.product_click(0)
+        self.product_page.increase_quantity(1)
+        self.product_page.add_to_cart_button_click()
+        product1 = {"name": self.product_page.product_title(),
+                    "qty": "2",
+                    "color": self.product_page.product_color()}
+        self.product_page.return_to_category_button_click()
+        self.category_page.product_click(1)
+        self.product_page.increase_quantity(2)
+        self.product_page.add_to_cart_button_click()
+        product2 = {"name": self.product_page.product_title(),
+                    "qty": "3",
+                    "color": self.product_page.product_color()}
+        self.product_page.return_to_category_button_click()
+        self.category_page.product_click(2)
+        self.product_page.increase_quantity(3)
+        self.product_page.add_to_cart_button_click()
+        product3 = {"name": self.product_page.product_title(),
+                    "qty": "4",
+                    "color": self.product_page.product_color()}
+
+        self.header_page.shopping_cart_button_hover()
+        self.assertIn(self.header_page.cart_hover_table_product_details(self.header_page.cart_hover_table_first_product())["name"][:-4], product3["name"])
+        self.assertEqual(product3["color"], self.header_page.cart_hover_table_product_details(self.header_page.cart_hover_table_first_product())["color"])
+        self.assertEqual(product3["qty"], self.header_page.cart_hover_table_product_details(self.header_page.cart_hover_table_first_product())["qty"])
+
+        self.assertIn(self.header_page.cart_hover_table_product_details(self.header_page.cart_hover_table_second_product())["name"][:-4], product2["name"])
+        self.assertEqual(product2["color"], self.header_page.cart_hover_table_product_details(self.header_page.cart_hover_table_second_product())["color"])
+        self.assertEqual(product2["qty"], self.header_page.cart_hover_table_product_details(self.header_page.cart_hover_table_second_product())["qty"])
+
+        self.assertIn(self.header_page.cart_hover_table_product_details(self.header_page.cart_hover_table_third_product())["name"][:-4], product1["name"])
+        self.assertEqual(product1["color"], self.header_page.cart_hover_table_product_details(self.header_page.cart_hover_table_third_product())["color"])
+        self.assertEqual(product1["qty"], self.header_page.cart_hover_table_product_details(self.header_page.cart_hover_table_third_product())["qty"])
 
     def test_3(self):
         pass

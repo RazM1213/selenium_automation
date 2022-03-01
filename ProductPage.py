@@ -1,5 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from time import sleep
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # Each page in the website gets a class - called page object
 
@@ -7,15 +10,16 @@ from selenium.webdriver.common.by import By
 class ProductPage:
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 10)
 
     def product_title(self):
-        return self.driver.find_element(By.CSS_SELECTOR, "#Description>h1")
+        return self.driver.find_element(By.CSS_SELECTOR, "#Description>h1").text
 
     def product_price(self):
-        return self.driver.find_element(By.CSS_SELECTOR, "#Description>h2")
+        return self.driver.find_element(By.CSS_SELECTOR, "#Description>h2").text
 
-    def available_colors(self):
-        return self.driver.find_elements(By.CSS_SELECTOR, "span[id='rabbit']")
+    def product_color(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "#productProperties>div>div>span")[0].get_attribute("title")
 
     def minus_button(self):
         return self.driver.find_element(By.CLASS_NAME, "minus")
@@ -48,9 +52,6 @@ class ProductPage:
 
     def add_to_cart_button_click(self):
         self.add_to_cart_button().click()
-
-    def choose_color(self, index):
-        self.available_colors()[index].click()
 
 
 

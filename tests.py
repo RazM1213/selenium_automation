@@ -47,5 +47,27 @@ cart_page = CartPage(driver)
 # else:
 #     print("FAIL")
 
+
+# Test 2:
+main_page.click_category("laptopsImg")
+category_page.product_click(0)
+product_page.increase_quantity(1)
+product_page.add_to_cart_button_click()
+product1 = {"name": product_page.product_title(), "qty": "2", "color": product_page.product_color().get_attribute("title")}
+product_page.return_to_category_button_click()
+category_page.product_click(1)
+product_page.increase_quantity(2)
+product_page.add_to_cart_button_click()
+product2 = {"name": product_page.product_title().text, "qty": "3", "color": product_page.product_color().get_attribute("title")}
+product_page.return_to_category_button_click()
+category_page.product_click(2)
+product_page.increase_quantity(3)
+product_page.add_to_cart_button_click()
+product3 = {"name": product_page.product_title().text, "qty": "4", "color": product_page.product_color().get_attribute("title")}
+
 header_page.shopping_cart_button_hover()
 
+list_tr = header_page.cart_hover_table().find_elements(By.TAG_NAME, "tr")
+print(header_page.cart_hover_table_product_details(header_page.cart_hover_table_first_product()))
+
+print(product3)
