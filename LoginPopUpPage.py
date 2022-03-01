@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # Each page in the website gets a class - called page object
 
@@ -7,6 +9,7 @@ from selenium.webdriver.common.by import By
 class LoginPopUpPage:
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 10)
 
     def username_field(self):
         return self.driver.find_element(By.NAME, "username")
@@ -35,7 +38,7 @@ class LoginPopUpPage:
     def check_remember_me_box(self):
         self.remember_me_box().click()
 
-    def sign_in_click(self):
+    def sign_in_button_click(self):
         self.sign_in_button().click()
 
     def create_new_account_link_click(self):
@@ -49,4 +52,4 @@ class LoginPopUpPage:
         self.send_password(password)
         if remember_me == "yes":
             self.remember_me_box().click()
-        self.sign_in_click()
+        self.sign_in_button_click()

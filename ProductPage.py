@@ -26,11 +26,25 @@ class ProductPage:
     def add_to_cart_button(self):
         return self.driver.find_element(By.NAME, "save_to_cart")
 
-    def decrease_quantity(self):
-        self.minus_button().click()
+    def return_to_category_button(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "a.ng-binding")[0]
 
-    def increase_quantity(self):
-        self.plus_button().click()
+    def return_to_home_button(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "div>nav>a")[0]
+
+    def return_to_category_button_click(self):
+        self.return_to_category_button().click()
+
+    def return_to_home_button_click(self):
+        self.return_to_home_button().click()
+
+    def decrease_quantity(self, i):
+        for x in range(i):
+            self.minus_button().click()
+
+    def increase_quantity(self, i):
+        for x in range(i):
+            self.plus_button().click()
 
     def add_to_cart_button_click(self):
         self.add_to_cart_button().click()

@@ -5,4 +5,5 @@ from selenium.webdriver.common.by import By
 
 
 class MyOrdersPage:
-    pass
+    def __init__(self, driver: webdriver.Chrome):
+        self.driver = driver
