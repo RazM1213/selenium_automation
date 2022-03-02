@@ -116,10 +116,10 @@ class HeaderPage:
 
     def my_account_page_button_click(self):
         self.wait.until(EC.invisibility_of_element(self.empty_cart_hover_table()))
-        # sleep(15)
         self.my_account_page_button().click()
 
     def my_orders_page_button_click(self):
+        self.wait.until(EC.invisibility_of_element(self.empty_cart_hover_table()))
         self.my_orders_page_button().click()
 
     def sign_out_button_click(self):

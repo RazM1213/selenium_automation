@@ -263,12 +263,55 @@ class test_AOS(TestCase):
         self.header_page.shopping_cart_button_click()
         self.assertTrue(self.cart_page.is_cart_empty())
         self.header_page.user_menu_button_click()
+        self.header_page.my_orders_page_button_click()
+        for product in products.values():
+            for k, v in product.items():
+                if k == "color":
+                    continue
+                self.assertIn(v.lower(), self.my_orders_page.my_orders_table())
+        self.header_page.user_menu_button_click()
         self.header_page.my_account_page_button_click()
         self.my_account_page.delete_account_button_click()
 
-
     def test_9(self):
-        pass
+        self.main_page.click_category(choice(self.categories))
+        list_randoms = []
+        products = {1: None, 2: None}
+        i = 1
+        while i < 3:
+            randnum = randint(0, len(self.category_page.products_list()) - 1)
+            if randnum in list_randoms:
+                continue
+            list_randoms.append(randnum)
+            self.category_page.product_click(randnum)
+            self.soldout = self.product_page.check_if_not_sold_out()
+            if self.soldout == True:
+                self.product_page.return_to_category_button_click()
+                continue
+            qty = randint(1, 4)
+            self.product_page.increase_quantity(qty)
+            self.product_page.add_to_cart_button_click()
+            products[i] = {"name": self.product_page.product_title(),
+                           "qty": str(qty + 1),
+                           "color": self.product_page.product_color()}
+            self.product_page.return_to_category_button_click()
+            i += 1
+
+        self.header_page.shopping_cart_button_click()
+        self.cart_page.click_checkout()
+        self.order_payment_page.login_existing_user("RazSelenium", "Neverhood1")
+        self.order_payment_page.next_button_click()
+        self.order_payment_page.manual_payment("433241235633", "123", "Tester")
+        self.assertTrue(self.order_payment_page.is_it_thank_you_page())
+        self.header_page.shopping_cart_button_click()
+        self.assertTrue(self.cart_page.is_cart_empty())
+        self.header_page.user_menu_button_click()
+        self.header_page.my_orders_page_button_click()
+        for product in products.values():
+            for k, v in product.items():
+                if k == "color":
+                    continue
+                self.assertIn(v.lower(), self.my_orders_page.my_orders_table())
 
     def test_10(self):
         pass
