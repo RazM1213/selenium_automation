@@ -62,13 +62,13 @@ class test_AOS(TestCase):
             self.soldout = False
             randnum = randint(0, len(self.category_page.products_list()) - 1)
             if randnum in list_randoms:
-                pass
+                continue
             list_randoms.append(randnum)
             self.category_page.product_click(randnum)
             self.soldout = self.product_page.check_if_not_sold_out()
             if self.soldout == True:
                 self.product_page.return_to_category_button_click()
-                pass
+                continue
             qty = randint(1, 4)
             self.product_page.increase_quantity(qty)
             self.product_page.add_to_cart_button_click()
@@ -113,13 +113,13 @@ class test_AOS(TestCase):
         while i < 3:
             randnum = randint(0, len(self.category_page.products_list()) - 1)
             if randnum in list_randoms:
-                pass
+                continue
             list_randoms.append(randnum)
             self.category_page.product_click(randnum)
             self.soldout = self.product_page.check_if_not_sold_out()
             if self.soldout == True:
                 self.product_page.return_to_category_button_click()
-                pass
+                continue
             qty = randint(1, 4)
             self.product_page.increase_quantity(qty)
             self.product_page.add_to_cart_button_click()
@@ -130,7 +130,7 @@ class test_AOS(TestCase):
             i += 1
 
         #now deletes a product
-        self.header_page.remove_product_button_click(1)
+        self.header_page.remove_product_button_click(0)
         #check if the product is not in the cart
         self.assertNotIn(products[2]["name"][:5], self.header_page.cart_hover_table().text)
         self.assertIn(products[1]["name"][:5], self.header_page.cart_hover_table().text)
@@ -147,7 +147,7 @@ class test_AOS(TestCase):
             self.soldout = self.product_page.check_if_not_sold_out()
             if self.soldout is True:
                 self.product_page.return_to_category_button_click()
-                pass
+                continue
             self.product_page.increase_quantity(randint(1, 4))
             self.product_page.add_to_cart_button_click()
             i += 1
@@ -164,14 +164,15 @@ class test_AOS(TestCase):
         i = 1
         while i < 4:
             self.soldout = False
-            randnum = randint(1, len(self.category_page.products_list()) - 1)
+            randnum = randint(0, len(self.category_page.products_list()) - 1)
             if randnum in list_randoms:
-                pass
+                continue
             list_randoms.append(randnum)
             self.category_page.product_click(randnum)
             self.soldout = self.product_page.check_if_not_sold_out()
             if self.soldout == True:
-                pass
+                self.product_page.return_to_category_button_click()
+                continue
             qty = randint(1, 2)
             self.product_page.increase_quantity(qty)
             self.product_page.add_to_cart_button_click()
@@ -180,14 +181,16 @@ class test_AOS(TestCase):
                            "price": self.product_page.product_price()}
             self.product_page.return_to_category_button_click()
             i += 1
-        total_prices = 0.0
-        for product in range(1, len(products)-1):
-            total_prices += products[product]["price"]
-            print(products[product]["price"])
+        total_prices = products[1]['price'] + products[2]['price'] + products[3]['price']
+        self.header_page.shopping_cart_button_click()
+        for product in products.values():
+            for k,v in product.items():
+                print(f"{k}:{v}")
+        self.assertEqual(round(total_prices, 2), self.cart_page.the_total_amount_in_the_checkout_button())
 
 
     def test_6(self):
-        pass
+
 
     def test_7(self):
         pass
@@ -202,6 +205,6 @@ class test_AOS(TestCase):
         pass
 
     def tearDown(self):
-        sleep(10)
+        self.driver.close()
 
 

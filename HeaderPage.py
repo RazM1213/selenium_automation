@@ -45,7 +45,7 @@ class HeaderPage:
         return self.driver.find_element(By.CSS_SELECTOR, "#menuUserLink>.hi-user").text
 
     def cart_hover_table(self):
-        return self.driver.find_elements(By.TAG_NAME, "table")[0]
+        return self.driver.find_element(By.TAG_NAME, "table")
 
     def cart_hover_table_first_product(self):
         return self.driver.find_elements(By.CSS_SELECTOR, "table>tbody>tr")[0]

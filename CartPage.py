@@ -55,7 +55,7 @@ class CartPage:
         total = self.driver.find_element(By.CSS_SELECTOR, "#checkOutButton").text
         index = total.find('$')
         total = total[index + 1:-1]
-        return float(total)
+        return float(total.replace(',',''))
 
     def check_if_cart_is_empty(self):
         return self.driver.find_element(By.CSS_SELECTOR, "#shoppingCart>.bigEmptyCart ").is_displayed()
