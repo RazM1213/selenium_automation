@@ -14,6 +14,12 @@ class CartPage:
         self.wait = WebDriverWait(self.driver, 10)
         self.header_page = HeaderPage(self.driver)
 
+    def cart_empty_label(self):
+        return self.driver.find_element(By.LINK_TEXT, "CONTINUE SHOPPING")
+
+    def is_cart_empty(self):
+        return self.cart_empty_label().text == "CONTINUE SHOPPING"
+
     def shopping_Cart_header(self):
         return self.driver.find_element(By.CSS_SELECTOR, "section>article>h3")
 

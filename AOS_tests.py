@@ -11,7 +11,11 @@ from CategoryPage import CategoryPage
 from ProductPage import ProductPage
 from CheckoutPage import CheckoutPage
 from MyOrdersPage import MyOrdersPage
+from OrderPaymentPage import OrderPaymentPage
+from CreateAccountPage import CreateAccountPage
 from random import choice,randint
+from MyAccountPage import MyAccountPage
+
 
 class test_AOS(TestCase):
     def setUp(self):
@@ -34,6 +38,9 @@ class test_AOS(TestCase):
         self.product_page = ProductPage(self.driver)
         self.checkout_page = CheckoutPage(self.driver)
         self.my_orders_page = MyOrdersPage(self.driver)
+        self.order_payment_page = OrderPaymentPage(self.driver)
+        self.create_account_page = CreateAccountPage(self.driver)
+        self.my_account_page = MyAccountPage(self.driver)
         self.categories = ["speakersImg","laptopsImg","tabletsImg","headphonesImg","miceImg"]
         self.soldout = False
 
@@ -245,6 +252,20 @@ class test_AOS(TestCase):
                            "color": self.product_page.product_color()}
             self.product_page.return_to_category_button_click()
             i += 1
+
+        self.header_page.shopping_cart_button_click()
+        self.cart_page.click_checkout()
+        self.order_payment_page.registration_button_click()
+        self.create_account_page.create_account("TestingSel1", "testingsel@gmail.com", "Ts12")
+        self.order_payment_page.next_button_click()
+        self.order_payment_page.safepay_payment("SafePayA", "Ts12")
+        self.assertTrue(self.order_payment_page.is_it_thank_you_page())
+        self.header_page.shopping_cart_button_click()
+        self.assertTrue(self.cart_page.is_cart_empty())
+        self.header_page.user_menu_button_click()
+        self.header_page.my_account_page_button_click()
+        self.my_account_page.delete_account_button_click()
+
 
     def test_9(self):
         pass

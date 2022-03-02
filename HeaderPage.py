@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from time import sleep
 
 
 # Each page in the website gets a class - called page object
@@ -11,7 +12,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 class HeaderPage:
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 10)
+        self.wait = WebDriverWait(self.driver, 15)
 
     def nav_bar(self):
         return self.driver.find_element(By.CLASS_NAME, ".desktop-handler")
@@ -22,11 +23,23 @@ class HeaderPage:
     def user_menu_button(self):
         return self.driver.find_element(By.ID, "menuUserLink")
 
+    def my_account_page_button(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "#loginMiniTitle>.option")[0]
+
+    def my_orders_page_button(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "#loginMiniTitle>.option")[1]
+
+    def sign_out_button(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "#loginMiniTitle>.option")[2]
+
     def shopping_cart_button(self):
         return self.driver.find_element(By.ID, "shoppingCartLink")
 
     def shopping_cart_number(self):
         return self.driver.find_elements(By.CSS_SELECTOR, "span.cart.ng-binding")[1].text
+
+    def empty_cart_hover_table(self):
+        return self.driver.find_element(By.CLASS_NAME, "emptyCart")
 
     def help_button(self):
         return self.driver.find_element(By.ID, "helpLink")
@@ -100,3 +113,15 @@ class HeaderPage:
 
     def remove_product_button_click(self, product_num):
         self.remove_product_button(product_num).click()
+
+    def my_account_page_button_click(self):
+        self.wait.until(EC.invisibility_of_element(self.empty_cart_hover_table()))
+        # sleep(15)
+        self.my_account_page_button().click()
+
+    def my_orders_page_button_click(self):
+        self.my_orders_page_button().click()
+
+    def sign_out_button_click(self):
+        self.sign_out_button().click()
+
