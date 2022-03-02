@@ -223,7 +223,28 @@ class test_AOS(TestCase):
         self.assertTrue(self.main_page.is_it_main_page())
 
     def test_8(self):
-        pass
+        self.main_page.click_category(choice(self.categories))
+        list_randoms = []
+        products = {1: None, 2: None}
+        i = 1
+        while i < 3:
+            randnum = randint(0, len(self.category_page.products_list()) - 1)
+            if randnum in list_randoms:
+                continue
+            list_randoms.append(randnum)
+            self.category_page.product_click(randnum)
+            self.soldout = self.product_page.check_if_not_sold_out()
+            if self.soldout == True:
+                self.product_page.return_to_category_button_click()
+                continue
+            qty = randint(1, 4)
+            self.product_page.increase_quantity(qty)
+            self.product_page.add_to_cart_button_click()
+            products[i] = {"name": self.product_page.product_title(),
+                           "qty": str(qty + 1),
+                           "color": self.product_page.product_color()}
+            self.product_page.return_to_category_button_click()
+            i += 1
 
     def test_9(self):
         pass
