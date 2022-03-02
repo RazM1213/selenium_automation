@@ -23,8 +23,8 @@ class test_AOS(TestCase):
         Setting Up the webdriver at the AOS's url.
         Instantiating all relevant page objects for the upcoming tests.
         """
-        self.service = Service(r"C:\Users\razm1\selenium_drivers\chromedriver.exe")
-        # self.service = Service(r"C:\Users\97255\Desktop\driverdownload\chromedriver.exe")
+        # self.service = Service(r"C:\Users\razm1\selenium_drivers\chromedriver.exe")
+        self.service = Service(r"C:\Users\97255\Desktop\driverdownload\chromedriver.exe")
 
         self.driver = webdriver.Chrome(service=self.service)
         self.driver.implicitly_wait(10)
@@ -314,7 +314,17 @@ class test_AOS(TestCase):
                 self.assertIn(v.lower(), self.my_orders_page.my_orders_table())
 
     def test_10(self):
-        pass
+        self.header_page.user_menu_button_click()
+        self.login_pop_up_page.sign_in("aaaaa", "Jc12", "no")
+
+        self.header_page.user_menu_button_click()
+        self.header_page.my_account_page_button_click()
+        self.assertTrue(self.my_account_page.check_user_is_connected("Johnathan cohen"))
+        self.header_page.user_menu_button_click()
+        self.header_page.sign_out_button_click()
+
+        self.header_page.user_menu_button_click()
+        self.assertTrue(self.login_pop_up_page.login_x_button().is_displayed())
 
     def tearDown(self):
         self.driver.close()

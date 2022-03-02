@@ -12,7 +12,7 @@ from time import sleep
 class HeaderPage:
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 15)
+        self.wait = WebDriverWait(self.driver, 30)
 
     def nav_bar(self):
         return self.driver.find_element(By.CLASS_NAME, ".desktop-handler")
@@ -21,6 +21,8 @@ class HeaderPage:
         return self.driver.find_element(By.CSS_SELECTOR, ".logo>a")
 
     def user_menu_button(self):
+        self.wait.until(EC.visibility_of(self.driver.find_element(By.ID, "menuUserLink")))
+        self.wait.until(EC.element_to_be_clickable(self.driver.find_element(By.ID, "menuUserLink")))
         return self.driver.find_element(By.ID, "menuUserLink")
 
     def my_account_page_button(self):
@@ -80,7 +82,7 @@ class HeaderPage:
         self.logo().click()
 
     def user_menu_button_click(self):
-        self.wait.until(EC.element_to_be_clickable(self.user_menu_button()))
+        sleep(3)
         self.user_menu_button().click()
 
     def shopping_cart_button_click(self):

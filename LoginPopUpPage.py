@@ -27,6 +27,7 @@ class LoginPopUpPage:
         return self.driver.find_element(By.LINK_TEXT, "CREATE NEW ACCOUNT")
 
     def login_x_button(self):
+        self.wait.until(EC.visibility_of(self.driver.find_element(By.CLASS_NAME, "loginPopUpCloseBtn")))
         return self.driver.find_element(By.CLASS_NAME, "loginPopUpCloseBtn")
 
     def send_username(self, username):

@@ -21,3 +21,10 @@ class MyAccountPage:
         self.delete_account_button().click()
         self.wait.until(EC.visibility_of(self.delete_account_confirm_button()))
         self.delete_account_confirm_button().click()
+
+    def account_details_boxes(self):
+        return self.driver.find_element(By.CSS_SELECTOR, ".borderBox").text
+
+
+    def check_user_is_connected(self, name):
+        return name in self.account_details_boxes()
