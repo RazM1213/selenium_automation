@@ -61,4 +61,4 @@ class CartPage:
         return self.driver.find_element(By.CSS_SELECTOR, "#shoppingCart>.bigEmptyCart ").is_displayed()
 
     def check_if_the_page_is_cart(self):
-        return self.shopping_Cart_header().is_displayed()
+        return "SHOPPING CART" in self.shopping_Cart_header().text

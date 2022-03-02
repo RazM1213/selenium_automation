@@ -16,7 +16,7 @@ class ProductPage:
         return self.driver.find_element(By.CSS_SELECTOR, "#Description>h1").text
 
     def product_price(self):
-        return self.driver.find_element(By.CSS_SELECTOR, "#Description>h2").text
+        return float(self.driver.find_element(By.CSS_SELECTOR, "#Description>h2").text[1:].replace(',',''))
 
     def product_color(self):
         return self.driver.find_elements(By.CSS_SELECTOR, "#productProperties>div>div>span")[0].get_attribute("title")
@@ -53,5 +53,11 @@ class ProductPage:
     def add_to_cart_button_click(self):
         self.add_to_cart_button().click()
 
+    def check_if_not_sold_out(self):
+        for elem in self.driver.find_elements(By.CSS_SELECTOR, "#Description"):
+            if "SOLD OUT" in elem.text:
+                return True
+
+        return False
 
 

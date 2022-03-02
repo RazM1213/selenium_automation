@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
+
 # Each page in the website gets a class - called page object
 
 
@@ -94,4 +95,8 @@ class HeaderPage:
         self.send_search_bar_field(key)
         self.submit_search_bar_button_click()
 
+    def remove_product_button(self, product_num):
+        return self.driver.find_elements(By.CSS_SELECTOR, ".removeProduct")[product_num]
 
+    def remove_product_button_click(self, product_num):
+        self.remove_product_button(product_num).click()
