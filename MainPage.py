@@ -11,6 +11,9 @@ class MainPage:
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10)
 
+    def is_it_main_page(self):
+        return self.driver.current_url == "https://advantageonlineshopping.com/#/"
+
     def speakers(self):
         return self.driver.find_element(By.ID, "speakersImg")
 

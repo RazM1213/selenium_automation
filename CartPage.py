@@ -1,13 +1,18 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from HeaderPage import HeaderPage
 
 
 # Each page in the website gets a class - called page object
 
 
 class CartPage:
-    def __init__(self, driver: webdriver):
+    def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, 10)
+        self.header_page = HeaderPage(self.driver)
 
     def shopping_Cart_header(self):
         return self.driver.find_element(By.CSS_SELECTOR, "section>article>h3")
@@ -62,3 +67,13 @@ class CartPage:
 
     def check_if_the_page_is_cart(self):
         return "SHOPPING CART" in self.shopping_Cart_header().text
+
+    def edit_buttons(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "a.edit")
+
+    def edit_button_click(self, index):
+        self.wait.until(EC.invisibility_of_element(self.header_page.cart_hover_table()))
+        self.edit_buttons()[index].click()
+
+    def product_quantity(self, index):
+        return self.driver.find_elements(By.CSS_SELECTOR, "td[class='smollCell quantityMobile']>label.ng-binding")[index].text

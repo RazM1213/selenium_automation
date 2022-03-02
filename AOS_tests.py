@@ -19,8 +19,8 @@ class test_AOS(TestCase):
         Setting Up the webdriver at the AOS's url.
         Instantiating all relevant page objects for the upcoming tests.
         """
-        #self.service = Service(r"C:\Users\razm1\selenium_drivers\chromedriver.exe")
-        self.service = Service(r"C:\Users\97255\Desktop\driverdownload\chromedriver.exe")
+        self.service = Service(r"C:\Users\razm1\selenium_drivers\chromedriver.exe")
+        # self.service = Service(r"C:\Users\97255\Desktop\driverdownload\chromedriver.exe")
 
         self.driver = webdriver.Chrome(service=self.service)
         self.driver.implicitly_wait(10)
@@ -104,7 +104,6 @@ class test_AOS(TestCase):
         self.assertEqual(products[3]["qty"], self.header_page.cart_hover_table_product_details(
             self.header_page.cart_hover_table_first_product())["qty"])
 
-
     def test_3(self):
         self.main_page.click_category(choice(self.categories))
         list_randoms = []
@@ -129,14 +128,11 @@ class test_AOS(TestCase):
             self.product_page.return_to_category_button_click()
             i += 1
 
-        #now deletes a product
+        # now deletes a product
         self.header_page.remove_product_button_click(0)
-        #check if the product is not in the cart
+        # check if the product is not in the cart
         self.assertNotIn(products[2]["name"][:5], self.header_page.cart_hover_table().text)
         self.assertIn(products[1]["name"][:5], self.header_page.cart_hover_table().text)
-
-
-
 
     def test_4(self):
         self.main_page.click_category(choice(self.categories))
@@ -153,9 +149,6 @@ class test_AOS(TestCase):
             i += 1
         self.header_page.shopping_cart_button_click()
         self.assertTrue(self.cart_page.check_if_the_page_is_cart())
-
-
-
 
     def test_5(self):
         self.main_page.click_category(choice(self.categories))
@@ -178,7 +171,7 @@ class test_AOS(TestCase):
             self.product_page.add_to_cart_button_click()
             products[i] = {"name": self.product_page.product_title(),
                            "qty": str(qty + 1),
-                           "price": self.product_page.product_price()}
+                           "price": self.product_page.product_price() * (qty + 1)}
             self.product_page.return_to_category_button_click()
             i += 1
         total_prices = products[1]['price'] + products[2]['price'] + products[3]['price']
@@ -188,12 +181,46 @@ class test_AOS(TestCase):
                 print(f"{k}:{v}")
         self.assertEqual(round(total_prices, 2), self.cart_page.the_total_amount_in_the_checkout_button())
 
-
     def test_6(self):
+        self.main_page.click_category(choice(self.categories))
+        list_randoms = []
+        quantities = []
+        i = 1
+        while i < 3:
+            randnum = randint(0, len(self.category_page.products_list()) - 1)
+            if randnum in list_randoms:
+                continue
+            list_randoms.append(randnum)
+            self.category_page.product_click(randnum)
+            self.soldout = self.product_page.check_if_not_sold_out()
+            if self.soldout:
+                self.product_page.return_to_category_button_click()
+                continue
+            qty = randint(1, 4)
+            self.product_page.increase_quantity(qty)
+            quantities.append(str(qty+1))
+            self.product_page.add_to_cart_button_click()
+            self.product_page.return_to_category_button_click()
+            i += 1
 
+        self.header_page.shopping_cart_button_click()
+        self.cart_page.edit_button_click(0)
+        self.product_page.increase_quantity(1)
+        self.header_page.shopping_cart_button_click()
+        self.cart_page.edit_button_click(1)
+        self.product_page.increase_quantity(2)
+        self.header_page.shopping_cart_button_click()
+
+        self.assertEqual(quantities[1], self.cart_page.product_quantity(0))
+        self.assertEqual(quantities[0], self.cart_page.product_quantity(1))
 
     def test_7(self):
-        pass
+        self.main_page.click_category("tabletsImg")
+        self.category_page.product_click(0)
+        self.product_page.return_to_category_button_click()
+        self.assertEqual(self.category_page.category_title(), "TABLETS")
+        self.header_page.logo_click()
+        self.assertTrue(self.main_page.is_it_main_page())
 
     def test_8(self):
         pass

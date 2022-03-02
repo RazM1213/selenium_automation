@@ -9,7 +9,7 @@ class CategoryPage:
         self.driver = driver
 
     def category_title(self):
-        return self.driver.find_element(By.CLASS_NAME, "categoryTitle")
+        return self.driver.find_element(By.CLASS_NAME, "categoryTitle").text
 
     def products_list(self):
         return self.driver.find_elements(By.CSS_SELECTOR, ".categoryRight>ul>li")
