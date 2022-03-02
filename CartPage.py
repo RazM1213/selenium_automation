@@ -35,8 +35,6 @@ class CartPage:
     def shopping_Cart_checkoutBt(self):
         return self.driver.find_element(By.ID, "checkOutButton")
 
-    """return list of all the prices"""
-
     def shopping_Cart_all_prices_list(self):
         list_prices = self.driver.find_elements(By.CSS_SELECTOR, "td>p")
         rlist = []

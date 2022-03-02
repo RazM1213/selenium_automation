@@ -1,8 +1,6 @@
 from unittest import TestCase
 from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
-from time import sleep
-from selenium.webdriver.common.by import By
 from MainPage import MainPage
 from HeaderPage import HeaderPage
 from LoginPopUpPage import LoginPopUpPage
@@ -23,13 +21,15 @@ class test_AOS(TestCase):
         Setting Up the webdriver at the AOS's url.
         Instantiating all relevant page objects for the upcoming tests.
         """
-        # self.service = Service(r"C:\Users\razm1\selenium_drivers\chromedriver.exe")
-        self.service = Service(r"C:\Users\97255\Desktop\driverdownload\chromedriver.exe")
+        self.service = Service(r"C:\Users\razm1\selenium_drivers\chromedriver.exe")
+        #self.service = Service(r"C:\Users\97255\Desktop\driverdownload\chromedriver.exe")
 
+        # Setting up the webdriver and browser:
         self.driver = webdriver.Chrome(service=self.service)
         self.driver.implicitly_wait(10)
         self.driver.get("https://advantageonlineshopping.com/#/")
         self.driver.maximize_window()
+        # Instantiating page objects:
         self.header_page = HeaderPage(self.driver)
         self.main_page = MainPage(self.driver)
         self.login_pop_up_page = LoginPopUpPage(self.driver)
@@ -41,6 +41,8 @@ class test_AOS(TestCase):
         self.order_payment_page = OrderPaymentPage(self.driver)
         self.create_account_page = CreateAccountPage(self.driver)
         self.my_account_page = MyAccountPage(self.driver)
+
+        # Useful attributes for randomizing tests:
         self.categories = ["speakersImg","laptopsImg","tabletsImg","headphonesImg","miceImg"]
         self.soldout = False
 
@@ -61,6 +63,10 @@ class test_AOS(TestCase):
         self.assertEqual(self.header_page.shopping_cart_number(), "5")
 
     def test_2(self):
+        """
+        This test chooses 3 random products, sets 3 random quantities for them - and
+        checks that they appear correctly in the cart hover window
+        """
         self.main_page.click_category(choice(self.categories))
         list_randoms = []
         products = {1: None, 2: None, 3: None}
@@ -112,6 +118,10 @@ class test_AOS(TestCase):
             self.header_page.cart_hover_table_first_product())["qty"])
 
     def test_3(self):
+        """
+        This test checks that after adding 2 random products to the cart, and deleting
+        one of them - the correct product is removed and no longer appears in the cart
+        """
         self.main_page.click_category(choice(self.categories))
         list_randoms = []
         products = {1: None, 2: None}
@@ -142,6 +152,10 @@ class test_AOS(TestCase):
         self.assertIn(products[1]["name"][:5], self.header_page.cart_hover_table().text)
 
     def test_4(self):
+        """
+        This test checks that the user can navigate to the shopping cart page
+        by pressing on the cart icon after adding a product to the cart
+        """
         self.main_page.click_category(choice(self.categories))
         i = 0
         while i < 1:
@@ -158,6 +172,12 @@ class test_AOS(TestCase):
         self.assertTrue(self.cart_page.check_if_the_page_is_cart())
 
     def test_5(self):
+        """
+        This test checks that the total order price is the sum of all the products
+        which are in the cart - according to the actual products' price as shown
+        when ordering them
+        Moreover the test prints for every product: name, quantity and price
+        """
         self.main_page.click_category(choice(self.categories))
         list_randoms = []
         products = {1: None, 2: None, 3: None}
@@ -189,6 +209,15 @@ class test_AOS(TestCase):
         self.assertEqual(round(total_prices, 2), self.cart_page.the_total_amount_in_the_checkout_button())
 
     def test_6(self):
+        """
+        BUG
+        This checks that the feature of editing quantities of products in the cart
+        works as expected.
+        The expected result is that the edit button will edit the corresponding
+        product quantity
+        The actual result is that the edit button edits the quantity of the first
+        product in the cart table
+        """
         self.main_page.click_category(choice(self.categories))
         list_randoms = []
         quantities = []
@@ -212,16 +241,20 @@ class test_AOS(TestCase):
 
         self.header_page.shopping_cart_button_click()
         self.cart_page.edit_button_click(0)
-        self.product_page.increase_quantity(1)
+        self.product_page.increase_quantity(5)
         self.header_page.shopping_cart_button_click()
         self.cart_page.edit_button_click(1)
-        self.product_page.increase_quantity(2)
+        self.product_page.increase_quantity(7)
         self.header_page.shopping_cart_button_click()
 
-        self.assertEqual(quantities[1], self.cart_page.product_quantity(0))
-        self.assertEqual(quantities[0], self.cart_page.product_quantity(1))
+        self.assertEqual(quantities[0], self.cart_page.product_quantity(0))
+        self.assertEqual(quantities[1], self.cart_page.product_quantity(1))
 
     def test_7(self):
+        """
+        This test checks that the navigation from product page to the main page
+        works as expected
+        """
         self.main_page.click_category("tabletsImg")
         self.category_page.product_click(0)
         self.product_page.return_to_category_button_click()
@@ -230,6 +263,10 @@ class test_AOS(TestCase):
         self.assertTrue(self.main_page.is_it_main_page())
 
     def test_8(self):
+        """
+        This test checks an E2E process of order placement via SafePay method for
+        a new user
+        """
         self.main_page.click_category(choice(self.categories))
         list_randoms = []
         products = {1: None, 2: None}
@@ -274,6 +311,10 @@ class test_AOS(TestCase):
         self.my_account_page.delete_account_button_click()
 
     def test_9(self):
+        """
+        This test checks an E2E process of order placement via MasterCredit for
+        an existing user
+        """
         self.main_page.click_category(choice(self.categories))
         list_randoms = []
         products = {1: None, 2: None}
@@ -314,6 +355,9 @@ class test_AOS(TestCase):
                 self.assertIn(v.lower(), self.my_orders_page.my_orders_table())
 
     def test_10(self):
+        """
+        This test checks an E2E process of login and logout
+        """
         self.header_page.user_menu_button_click()
         self.login_pop_up_page.sign_in("aaaaa", "Jc12", "no")
 
@@ -327,6 +371,10 @@ class test_AOS(TestCase):
         self.assertTrue(self.login_pop_up_page.login_x_button().is_displayed())
 
     def tearDown(self):
+        """
+        After each test go to main page and close the browser
+        """
+        self.header_page.logo_click()
         self.driver.close()
 
 
