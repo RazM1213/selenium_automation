@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # Each page in the website gets a class - called page object
 
@@ -17,7 +18,7 @@ class ProductPage:
         return float(self.driver.find_element(By.CSS_SELECTOR, "#Description>h2").text[1:].replace(',',''))
 
     def product_color(self):
-        return self.driver.find_elements(By.CSS_SELECTOR, "#productProperties>div>div>span")[0].get_attribute("title")
+        return self.driver.find_elements(By.CSS_SELECTOR, "#productProperties>.colors>div>span")[0].get_attribute("title")
 
     def minus_button(self):
         return self.driver.find_element(By.CLASS_NAME, "minus")
@@ -35,6 +36,7 @@ class ProductPage:
         return self.driver.find_elements(By.CSS_SELECTOR, "div>nav>a")[0]
 
     def return_to_category_button_click(self):
+        self.wait.until(EC.element_to_be_clickable(self.return_to_category_button()))
         self.return_to_category_button().click()
 
     def return_to_home_button_click(self):

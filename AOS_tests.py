@@ -49,7 +49,7 @@ class test_AOS(TestCase):
         This test checks that the number next to the cart icon
         updates correctly according to the actual number of products in the cart
         """
-        self.main_page.click_category(choice(self.categories))
+        self.main_page.click_category("speakersImg")
         self.category_page.product_click(0)
         self.product_page.increase_quantity(1)
         self.product_page.add_to_cart_button_click()
@@ -65,7 +65,8 @@ class test_AOS(TestCase):
         This test chooses 3 random products, sets 3 random quantities for them - and
         checks that they appear correctly in the cart hover window
         """
-        self.main_page.click_category(choice(self.categories))
+        # self.main_page.click_category(choice(self.categories))
+        self.main_page.click_category("headphonesImg")
         list_randoms = []
         products = {1: None, 2: None, 3: None}
         i = 1
@@ -367,6 +368,7 @@ class test_AOS(TestCase):
 
         self.header_page.user_menu_button_click()
         self.assertTrue(self.login_pop_up_page.login_x_button().is_displayed())
+        self.login_pop_up_page.login_x_button_click()
 
     def tearDown(self):
         """

@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
 
 # Each page in the website gets a class - called page object
 
@@ -47,6 +48,7 @@ class LoginPopUpPage:
 
     def login_x_button_click(self):
         self.login_x_button().click()
+        sleep(2)
 
     def sign_in(self, username, password, remember_me="no"):
         """

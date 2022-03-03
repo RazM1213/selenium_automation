@@ -18,6 +18,7 @@ class MyAccountPage:
         return self.driver.find_element(By.CLASS_NAME, "deleteRed")
 
     def delete_account_button_click(self):
+        self.wait.until(EC.visibility_of(self.delete_account_button()))
         self.delete_account_button().click()
         self.wait.until(EC.visibility_of(self.delete_account_confirm_button()))
         self.delete_account_confirm_button().click()
