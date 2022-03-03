@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+from time import sleep
 # Each page in the website gets a class - called page object
 
 
@@ -24,7 +24,7 @@ class CreateAccountPage:
         return self.driver.find_element(By.NAME, "confirm_passwordRegisterPage")
 
     def agree_button(self):
-        return self.driver.find_element(By.CSS_SELECTOR, "input[name='i_agree']")
+        return self.driver.find_element(By.CSS_SELECTOR, ".inputContainer>input[name='i_agree']")
 
     def register_button(self):
         return self.driver.find_element(By.ID, "register_btnundefined")
@@ -58,6 +58,8 @@ class CreateAccountPage:
         self.send_password(password)
         self.send_confirm_password(password)
         self.wait.until(EC.visibility_of(self.agree_button()))
+        sleep(2)
         self.agree_button_click()
         self.wait.until(EC.element_to_be_clickable(self.register_button()))
+        sleep(2)
         self.register_button_click()

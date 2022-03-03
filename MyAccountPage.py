@@ -12,7 +12,7 @@ class MyAccountPage:
         self.wait = WebDriverWait(self.driver, 10)
 
     def delete_account_button(self):
-        return self.driver.find_element(By.CLASS_NAME, "deleteMainBtnContainer")
+        return self.driver.find_element(By.CSS_SELECTOR, ".cube>.deleteMainBtnContainer")
 
     def delete_account_confirm_button(self):
         return self.driver.find_element(By.CLASS_NAME, "deleteRed")
@@ -25,7 +25,6 @@ class MyAccountPage:
 
     def account_details_boxes(self):
         return self.driver.find_element(By.CSS_SELECTOR, ".borderBox").text
-
 
     def check_user_is_connected(self, name):
         return name in self.account_details_boxes()
