@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from time import sleep
 
 # Each page in the website gets a class - called page object
 
@@ -51,6 +50,9 @@ class CreateAccountPage:
         self.register_button().click()
 
     def create_account(self, username, email, password):
+        """
+        E2E Process of user registration
+        """
         self.send_username(username)
         self.send_email(email)
         self.send_password(password)

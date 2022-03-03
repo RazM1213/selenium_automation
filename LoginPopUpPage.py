@@ -49,6 +49,9 @@ class LoginPopUpPage:
         self.login_x_button().click()
 
     def sign_in(self, username, password, remember_me="no"):
+        """
+        E2E Login process
+        """
         self.send_username(username)
         self.send_password(password)
         if remember_me == "yes":

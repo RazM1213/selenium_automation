@@ -71,6 +71,9 @@ class OrderPaymentPage:
         self.master_card_button().click()
 
     def manual_payment(self, card_number, cvv_number, cardholder_name):
+        """
+        E2E Process of payment with MasterCredit card
+        """
         self.master_card_button_click()
         self.edit_card_button_click()
         self.send_card_number_field(card_number)
@@ -94,6 +97,9 @@ class OrderPaymentPage:
         self.pay_now_button().click()
 
     def safepay_payment(self, username, password):
+        """
+        E2E Process of payment by SafePay
+        """
         self.send_safepay_username_field(username)
         self.send_safepay_password_field(password)
         self.pay_now_button_click()

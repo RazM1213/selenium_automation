@@ -7,7 +7,6 @@ from LoginPopUpPage import LoginPopUpPage
 from CartPage import CartPage
 from CategoryPage import CategoryPage
 from ProductPage import ProductPage
-from CheckoutPage import CheckoutPage
 from MyOrdersPage import MyOrdersPage
 from OrderPaymentPage import OrderPaymentPage
 from CreateAccountPage import CreateAccountPage
@@ -36,7 +35,6 @@ class test_AOS(TestCase):
         self.cart_page = CartPage(self.driver)
         self.category_page = CategoryPage(self.driver)
         self.product_page = ProductPage(self.driver)
-        self.checkout_page = CheckoutPage(self.driver)
         self.my_orders_page = MyOrdersPage(self.driver)
         self.order_payment_page = OrderPaymentPage(self.driver)
         self.create_account_page = CreateAccountPage(self.driver)

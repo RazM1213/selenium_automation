@@ -44,7 +44,9 @@ class CartPage:
         return rlist
 
     def the_specific_product_name_and_price(self, trnum):
-        """this method returns a dictionary of the name, quantity, and price """
+        """
+        This method returns a dictionary of the name, quantity, and price of the product
+        """
         list_tr = []
         for item in self.shopping_Cart_tr_from_specific_tr(trnum).find_elements(By.TAG_NAME, 'td'):
             list_tr.append(item.text)
