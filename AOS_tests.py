@@ -10,7 +10,7 @@ from ProductPage import ProductPage
 from MyOrdersPage import MyOrdersPage
 from OrderPaymentPage import OrderPaymentPage
 from CreateAccountPage import CreateAccountPage
-from random import choice,randint
+from random import choice, randint
 from MyAccountPage import MyAccountPage
 
 
@@ -20,7 +20,6 @@ class test_AOS(TestCase):
         Setting Up the webdriver at the AOS's url.
         Instantiating all relevant page objects for the upcoming tests.
         """
-        # self.service = Service(r"C:\Users\razm1\selenium_drivers\chromedriver.exe")
         self.service = Service(r"C:\Users\97255\Desktop\driverdownload\chromedriver.exe")
 
         # Setting up the webdriver and browser:
@@ -41,7 +40,7 @@ class test_AOS(TestCase):
         self.my_account_page = MyAccountPage(self.driver)
 
         # Useful attributes for randomizing tests:
-        self.categories = ["speakersImg","laptopsImg","tabletsImg","headphonesImg","miceImg"]
+        self.categories = ["speakersImg", "laptopsImg", "tabletsImg", "headphonesImg", "miceImg"]
         self.soldout = False
 
     def test_1(self):
@@ -78,7 +77,7 @@ class test_AOS(TestCase):
             list_randoms.append(randnum)
             self.category_page.product_click(randnum)
             self.soldout = self.product_page.check_if_not_sold_out()
-            if self.soldout == True:
+            if self.soldout:
                 self.product_page.return_to_category_button_click()
                 continue
             qty = randint(1, 4)
@@ -132,7 +131,7 @@ class test_AOS(TestCase):
             list_randoms.append(randnum)
             self.category_page.product_click(randnum)
             self.soldout = self.product_page.check_if_not_sold_out()
-            if self.soldout == True:
+            if self.soldout:
                 self.product_page.return_to_category_button_click()
                 continue
             qty = randint(1, 4)
@@ -189,7 +188,7 @@ class test_AOS(TestCase):
             list_randoms.append(randnum)
             self.category_page.product_click(randnum)
             self.soldout = self.product_page.check_if_not_sold_out()
-            if self.soldout == True:
+            if self.soldout:
                 self.product_page.return_to_category_button_click()
                 continue
             qty = randint(1, 2)
@@ -203,7 +202,7 @@ class test_AOS(TestCase):
         total_prices = products[1]['price'] + products[2]['price'] + products[3]['price']
         self.header_page.shopping_cart_button_click()
         for product in products.values():
-            for k,v in product.items():
+            for k, v in product.items():
                 print(f"{k}:{v}")
         self.assertEqual(round(total_prices, 2), self.cart_page.the_total_amount_in_the_checkout_button())
 
@@ -277,7 +276,7 @@ class test_AOS(TestCase):
             list_randoms.append(randnum)
             self.category_page.product_click(randnum)
             self.soldout = self.product_page.check_if_not_sold_out()
-            if self.soldout == True:
+            if self.soldout:
                 self.product_page.return_to_category_button_click()
                 continue
             qty = randint(1, 4)
@@ -325,7 +324,7 @@ class test_AOS(TestCase):
             list_randoms.append(randnum)
             self.category_page.product_click(randnum)
             self.soldout = self.product_page.check_if_not_sold_out()
-            if self.soldout == True:
+            if self.soldout:
                 self.product_page.return_to_category_button_click()
                 continue
             qty = randint(1, 4)
@@ -376,5 +375,3 @@ class test_AOS(TestCase):
         """
         self.header_page.logo_click()
         self.driver.close()
-
-
