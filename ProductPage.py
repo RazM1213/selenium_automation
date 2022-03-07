@@ -15,7 +15,7 @@ class ProductPage:
         return self.driver.find_element(By.CSS_SELECTOR, "#Description>h1").text
 
     def product_price(self):
-        return float(self.driver.find_element(By.CSS_SELECTOR, "#Description>h2").text[1:].replace(',',''))
+        return float(self.driver.find_element(By.CSS_SELECTOR, "#Description>h2").text[1:].replace(',', ''))
 
     def product_color(self):
         return self.driver.find_elements(By.CSS_SELECTOR, "#productProperties>.colors>div>span")[0].get_attribute("title")

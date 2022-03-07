@@ -79,13 +79,23 @@ class HeaderPage:
         return {"name": name, "qty": qty, "color": color}
 
     def logo_click(self):
-        self.wait.until(EC.element_to_be_clickable(self.logo()))
-        sleep(8)
-        self.logo().click()
+        while True:
+            try:
+                self.logo().click()
+                break
+            except:
+                pass
+
 
     def user_menu_button_click(self):
-        sleep(3)
-        self.user_menu_button().click()
+        sleep(2)
+        while True:
+            try:
+                self.user_menu_button().click()
+                break
+            except:
+                pass
+
 
     def shopping_cart_button_click(self):
         self.shopping_cart_button().click()

@@ -31,6 +31,10 @@ class LoginPopUpPage:
         self.wait.until(EC.visibility_of(self.driver.find_element(By.CLASS_NAME, "loginPopUpCloseBtn")))
         return self.driver.find_element(By.CLASS_NAME, "loginPopUpCloseBtn")
 
+    def is_login_x_button_displayed(self):
+        sleep(2)
+        return self.login_x_button().is_displayed()
+
     def send_username(self, username):
         self.username_field().send_keys(username)
 

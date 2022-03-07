@@ -20,8 +20,8 @@ class test_AOS(TestCase):
         Setting Up the webdriver at the AOS's url.
         Instantiating all relevant page objects for the upcoming tests.
         """
-        self.service = Service(r"C:\Users\razm1\selenium_drivers\chromedriver.exe")
-        #self.service = Service(r"C:\Users\97255\Desktop\driverdownload\chromedriver.exe")
+        # self.service = Service(r"C:\Users\razm1\selenium_drivers\chromedriver.exe")
+        self.service = Service(r"C:\Users\97255\Desktop\driverdownload\chromedriver.exe")
 
         # Setting up the webdriver and browser:
         self.driver = webdriver.Chrome(service=self.service)
@@ -339,7 +339,7 @@ class test_AOS(TestCase):
 
         self.header_page.shopping_cart_button_click()
         self.cart_page.click_checkout()
-        self.order_payment_page.login_existing_user("RazSelenium", "Neverhood1")
+        self.order_payment_page.login_existing_user("aaaaa", "Jc12")
         self.order_payment_page.next_button_click()
         self.order_payment_page.manual_payment("433241235633", "123", "Tester")
         self.assertTrue(self.order_payment_page.is_it_thank_you_page())
@@ -362,12 +362,12 @@ class test_AOS(TestCase):
 
         self.header_page.user_menu_button_click()
         self.header_page.my_account_page_button_click()
-        self.assertTrue(self.my_account_page.check_user_is_connected("Johnathan cohen"))
+        self.assertTrue(self.my_account_page.check_user_is_connected("Johnathan Cohen"))
         self.header_page.user_menu_button_click()
         self.header_page.sign_out_button_click()
 
         self.header_page.user_menu_button_click()
-        self.assertTrue(self.login_pop_up_page.login_x_button().is_displayed())
+        self.assertTrue(self.login_pop_up_page.is_login_x_button_displayed())
         self.login_pop_up_page.login_x_button_click()
 
     def tearDown(self):

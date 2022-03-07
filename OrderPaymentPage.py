@@ -56,6 +56,7 @@ class OrderPaymentPage:
         self.edit_card_button().click()
 
     def send_card_number_field(self, card_number):
+        self.card_number_field().clear()
         self.card_number_field().send_keys(card_number)
 
     def send_CVV_number_field(self, cvv_number):

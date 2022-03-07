@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
+
 
 # Each page in the website gets a class - called page object
 
@@ -18,9 +20,12 @@ class MyAccountPage:
         return self.driver.find_element(By.CLASS_NAME, "deleteRed")
 
     def delete_account_button_click(self):
-        self.wait.until(EC.visibility_of(self.delete_account_button()))
-        self.delete_account_button().click()
-        self.wait.until(EC.visibility_of(self.delete_account_confirm_button()))
+        while True:
+            try:
+                self.delete_account_button().click()
+                break
+            except:
+                pass
         self.delete_account_confirm_button().click()
 
     def account_details_boxes(self):
